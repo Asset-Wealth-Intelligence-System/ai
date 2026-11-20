@@ -3,10 +3,10 @@
         <thead>
             <tr>
                 <th>{{@label}}</th>
-                <th>Tasks</th>
-                <th>Input</th>
-                <th>Output</th>
-                <th>Total</th>
+                <th>{{t "literal.ai.tasks"}}</th>
+                <th>{{t "literal.ai.input"}}</th>
+                <th>{{t "literal.ai.output"}}</th>
+                <th>{{t "literal.ai.total"}}</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                 </tr>
             {{else}}
                 <tr>
-                    <td colspan="5" class="fleetbase-ai-admin-empty">No usage found.</td>
+                    <td colspan="5" class="fleetbase-ai-admin-empty">{{t "literal.ai.no-usage-found"}}</td>
                 </tr>
             {{/each}}
         </tbody>

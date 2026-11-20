@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 
 export default class AdminAiAuditLogsComponent extends Component {
+    @service intl;
     @service fetch;
     @service notifications;
 
@@ -27,15 +28,17 @@ export default class AdminAiAuditLogsComponent extends Component {
     @tracked selectedUser = null;
     @tracked dateRange = null;
 
-    statusOptions = [
-        { label: 'Any status', value: '' },
-        { label: 'Active', value: 'active' },
-        { label: 'Ended', value: 'ended' },
-        { label: 'Completed', value: 'completed' },
-        { label: 'Failed', value: 'failed' },
-        { label: 'Cancelled', value: 'cancelled' },
-        { label: 'Running', value: 'running' },
+    get statusOptions() {
+        return [
+        { label: this.intl.t('literal.ai.any-status'), value: '' },
+        { label: this.intl.t('literal.ai.active'), value: 'active' },
+        { label: this.intl.t('literal.ai.ended'), value: 'ended' },
+        { label: this.intl.t('literal.ai.completed'), value: 'completed' },
+        { label: this.intl.t('literal.ai.failed'), value: 'failed' },
+        { label: this.intl.t('literal.ai.cancelled'), value: 'cancelled' },
+        { label: this.intl.t('literal.ai.running'), value: 'running' },
     ];
+    }
 
     constructor() {
         super(...arguments);
@@ -44,7 +47,7 @@ export default class AdminAiAuditLogsComponent extends Component {
     }
 
     get providerOptions() {
-        return [{ label: 'Any provider', value: '' }, ...(this.metadata.providers ?? [])];
+        return [{ label: this.intl.t('literal.ai.any-provider'), value: '' }, ...(this.metadata.providers ?? [])];
     }
 
     get selectedProviderMetadata() {
@@ -52,7 +55,7 @@ export default class AdminAiAuditLogsComponent extends Component {
     }
 
     get modelOptions() {
-        return [{ label: 'Any model', value: '' }, ...(this.selectedProviderMetadata?.models ?? [])];
+        return [{ label: this.intl.t('literal.ai.any-model'), value: '' }, ...(this.selectedProviderMetadata?.models ?? [])];
     }
 
     get userQuery() {
@@ -146,7 +149,7 @@ export default class AdminAiAuditLogsComponent extends Component {
         try {
             const response = yield this.fetch.post(`admin/tasks/${id}/reveal-content`, {}, { namespace: 'ai/int/v1' });
             this.selectedTask = response.task;
-            this.notifications.success('AI task content revealed.');
+            this.notifications.success(this.intl.t('literal.ai.ai-task-content-revealed'));
         } catch (error) {
             this.notifications.serverError(error);
         }

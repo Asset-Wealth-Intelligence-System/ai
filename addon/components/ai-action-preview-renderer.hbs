@@ -18,7 +18,7 @@
                 <div class="fleetbase-ai-action-title">{{@preview.label}}</div>
                 <div class="fleetbase-ai-action-message">{{@preview.message}}</div>
             </div>
-            <span class="fleetbase-ai-action-status">{{if @preview.ready "Ready" "Needs info"}}</span>
+            <span class="fleetbase-ai-action-status">{{if @preview.ready (t "literal.ai.ready") (t "literal.ai.needs-info")}}</span>
         </div>
 
         {{#if @preview.fields}}
@@ -26,7 +26,7 @@
                 {{#each @preview.fields as |field|}}
                     <div class="fleetbase-ai-action-field">
                         <span>{{field.label}}</span>
-                        <strong>{{or field.value "Not set"}}</strong>
+                        <strong>{{or field.value (t "literal.ai.not-set")}}</strong>
                     </div>
                 {{/each}}
             </div>
@@ -34,7 +34,7 @@
 
         {{#if @preview.missing_fields}}
             <div class="fleetbase-ai-action-list">
-                <div class="fleetbase-ai-action-list-title">Required before apply</div>
+                <div class="fleetbase-ai-action-list-title">{{t "literal.ai.required-before-apply"}}</div>
                 <ul>
                     {{#each @preview.missing_fields as |field|}}
                         <li>{{field}}</li>
@@ -67,7 +67,7 @@
                     @type="primary"
                     @size="sm"
                     @icon="check"
-                    @text={{or @preview.apply_label "Apply"}}
+                    @text={{or @preview.apply_label (t "literal.ai.apply")}}
                     @disabled={{or @preview.isDisabled @isApplying}}
                     @isLoading={{@isApplying}}
                     @onClick={{fn @onApply @task @preview}}
@@ -75,7 +75,7 @@
                 <Button
                     @size="sm"
                     @icon="xmark"
-                    @text={{or @preview.cancel_label "Cancel"}}
+                    @text={{or @preview.cancel_label (t "literal.ai.cancel")}}
                     @disabled={{@isCancelling}}
                     @onClick={{fn @onCancel @task}}
                 />

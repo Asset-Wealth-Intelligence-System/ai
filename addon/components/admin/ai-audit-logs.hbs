@@ -1,24 +1,24 @@
-<ContentPanel @title="AI Task & Chat Logs" @open={{true}} @wrapperClass="bordered-classic">
+<ContentPanel @title={{t "literal.ai.ai-task-chat-logs"}} @open={{true}} @wrapperClass="bordered-classic">
     <div class="fleetbase-ai-admin-panel">
         <div class="fleetbase-ai-admin-filters">
-            <InputGroup @name="Search">
-                <Input class="form-input form-input-sm w-full" @value={{this.filters.search}} placeholder="Search title, prompt summary, provider, model..." {{on "input" (fn this.setFilterFromInput "search")}} />
+            <InputGroup @name={{t "literal.ai.search"}}>
+                <Input class="form-input form-input-sm w-full" @value={{this.filters.search}} placeholder={{t "literal.ai.search-title-prompt-summary-provider-model"}} {{on "input" (fn this.setFilterFromInput "search")}} />
             </InputGroup>
-            <InputGroup @name="Status">
+            <InputGroup @name={{t "literal.ai.status"}}>
                 <Select class="w-full" @value={{this.filters.status}} @options={{this.statusOptions}} @optionLabel="label" @optionValue="value" @onSelect={{fn this.setFilter "status"}} />
             </InputGroup>
-            <InputGroup @name="Provider">
-                <Select class="w-full" @value={{this.filters.provider}} @options={{this.providerOptions}} @optionLabel="label" @optionValue="value" @placeholder="Any provider" @onSelect={{this.setProvider}} />
+            <InputGroup @name={{t "literal.ai.provider"}}>
+                <Select class="w-full" @value={{this.filters.provider}} @options={{this.providerOptions}} @optionLabel="label" @optionValue="value" @placeholder={{t "literal.ai.any-provider"}} @onSelect={{this.setProvider}} />
             </InputGroup>
-            <InputGroup @name="Model">
-                <Select class="w-full" @value={{this.filters.model}} @options={{this.modelOptions}} @optionLabel="label" @optionValue="value" @placeholder="Any model" @onSelect={{fn this.setFilter "model"}} />
+            <InputGroup @name={{t "literal.ai.model"}}>
+                <Select class="w-full" @value={{this.filters.model}} @options={{this.modelOptions}} @optionLabel="label" @optionValue="value" @placeholder={{t "literal.ai.any-model"}} @onSelect={{fn this.setFilter "model"}} />
             </InputGroup>
-            <InputGroup @name="Organization">
+            <InputGroup @name={{t "literal.ai.organization"}}>
                 <ModelSelect
                     @modelName="company"
                     @source={{this.companySource}}
                     @selectedModel={{this.selectedCompany}}
-                    @placeholder="Select organization"
+                    @placeholder={{t "literal.ai.select-organization"}}
                     @triggerClass="form-select form-input"
                     @allowClear={{true}}
                     @renderInPlace={{true}}
@@ -28,13 +28,13 @@
                     {{or company.name company.public_id company.uuid}}
                 </ModelSelect>
             </InputGroup>
-            <InputGroup @name="User">
+            <InputGroup @name={{t "literal.ai.user"}}>
                 <ModelSelect
                     @modelName="user"
                     @source={{this.userSource}}
                     @query={{this.userQuery}}
                     @selectedModel={{this.selectedUser}}
-                    @placeholder="Select user"
+                    @placeholder={{t "literal.ai.select-user"}}
                     @triggerClass="form-select form-input"
                     @allowClear={{true}}
                     @renderInPlace={{true}}
@@ -44,20 +44,20 @@
                     {{or user.name user.email user.public_id user.uuid}}
                 </ModelSelect>
             </InputGroup>
-            <InputGroup @name="Date">
-                <DatePicker @value={{this.dateRange}} @range={{true}} @onSelect={{this.setDateRange}} @autoClose={{true}} @buttons={{array "clear"}} @placeholder="Exact date or range" class="w-full form-input-sm" />
+            <InputGroup @name={{t "literal.ai.date"}}>
+                <DatePicker @value={{this.dateRange}} @range={{true}} @onSelect={{this.setDateRange}} @autoClose={{true}} @buttons={{array "clear"}} @placeholder={{t "literal.ai.exact-date-or-range"}} class="w-full form-input-sm" />
             </InputGroup>
         </div>
 
         <div class="fleetbase-ai-admin-actions">
-            <Button @type="primary" @icon="magnifying-glass" @text="Search logs" @isLoading={{this.loadSessions.isRunning}} @onClick={{perform this.loadSessions}} />
-            <Button @icon="xmark" @text="Clear" @onClick={{this.clearFilters}} />
+            <Button @type="primary" @icon="magnifying-glass" @text={{t "literal.ai.search-logs"}} @isLoading={{this.loadSessions.isRunning}} @onClick={{perform this.loadSessions}} />
+            <Button @icon="xmark" @text={{t "literal.ai.clear"}} @onClick={{this.clearFilters}} />
         </div>
 
         <div class="fleetbase-ai-admin-stack">
             <div class="fleetbase-ai-admin-card">
                 <div class="fleetbase-ai-admin-card-header">
-                    <span>Chat Sessions</span>
+                    <span>{{t "literal.ai.chat-sessions"}}</span>
                     <small>{{this.sessions.length}} shown</small>
                 </div>
 
@@ -65,24 +65,24 @@
                     <table class="fleetbase-ai-admin-table">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Organization</th>
-                                <th>User</th>
-                                <th>Status</th>
-                                <th>Turns</th>
-                                <th>Tokens</th>
-                                <th>Last message</th>
+                                <th>{{t "literal.ai.title"}}</th>
+                                <th>{{t "literal.ai.organization"}}</th>
+                                <th>{{t "literal.ai.user"}}</th>
+                                <th>{{t "literal.ai.status"}}</th>
+                                <th>{{t "literal.ai.turns"}}</th>
+                                <th>{{t "literal.ai.tokens"}}</th>
+                                <th>{{t "literal.ai.last-message"}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each this.sessions as |session|}}
                                 <tr role="button" class="fleetbase-ai-admin-row" {{on "click" (fn this.selectSession session)}}>
                                     <td>
-                                        <strong>{{or session.title "New AI chat"}}</strong>
+                                        <strong>{{or session.title (t "literal.ai.new-ai-chat")}}</strong>
                                         <small>{{session.uuid}}</small>
                                     </td>
-                                    <td>{{or session.company.name session.company_uuid "Unknown"}}</td>
-                                    <td>{{or session.created_by.name session.created_by.email session.created_by_uuid "Unknown"}}</td>
+                                    <td>{{or session.company.name session.company_uuid (t "literal.ai.unknown")}}</td>
+                                    <td>{{or session.created_by.name session.created_by.email session.created_by_uuid (t "literal.ai.unknown")}}</td>
                                     <td><span class="fleetbase-ai-admin-badge">{{or session.status "unknown"}}</span></td>
                                     <td>{{session.tasks_count}}</td>
                                     <td>{{session.total_tokens}}</td>
@@ -90,7 +90,7 @@
                                 </tr>
                             {{else}}
                                 <tr>
-                                    <td colspan="7" class="fleetbase-ai-admin-empty">No AI sessions found.</td>
+                                    <td colspan="7" class="fleetbase-ai-admin-empty">{{t "literal.ai.no-ai-sessions-found"}}</td>
                                 </tr>
                             {{/each}}
                         </tbody>
@@ -100,7 +100,7 @@
 
             <div class="fleetbase-ai-admin-card">
                 <div class="fleetbase-ai-admin-card-header">
-                    <span>Session Tasks</span>
+                    <span>{{t "literal.ai.session-tasks"}}</span>
                     {{#if this.selectedSession}}
                         <small>{{this.selectedSessionTasks.length}} turns</small>
                     {{/if}}
@@ -111,8 +111,8 @@
                         {{#each this.selectedSessionTasks as |task|}}
                             <button type="button" class="fleetbase-ai-admin-task-item" {{on "click" (fn this.selectTask task)}}>
                                 <span>
-                                    <strong>{{or task.prompt_excerpt "Untitled prompt"}}</strong>
-                                    <small>{{or task.response_summary "No response summary"}} </small>
+                                    <strong>{{or task.prompt_excerpt (t "literal.ai.untitled-prompt")}}</strong>
+                                    <small>{{or task.response_summary (t "literal.ai.no-response-summary")}} </small>
                                 </span>
                                 <span class="fleetbase-ai-admin-task-meta">
                                     {{or task.provider "local"}} / {{or task.model "unknown"}}
@@ -120,18 +120,18 @@
                                 </span>
                             </button>
                         {{else}}
-                            <div class="fleetbase-ai-admin-empty">This session has no tasks.</div>
+                            <div class="fleetbase-ai-admin-empty">{{t "literal.ai.this-session-has-no-tasks"}}</div>
                         {{/each}}
                     </div>
                 {{else}}
-                    <div class="fleetbase-ai-admin-empty">Select a chat session to inspect its tasks.</div>
+                    <div class="fleetbase-ai-admin-empty">{{t "literal.ai.select-a-chat-session-to-inspect-its-tasks"}}</div>
                 {{/if}}
             </div>
         </div>
 
         <div class="fleetbase-ai-admin-card">
             <div class="fleetbase-ai-admin-card-header">
-                <span>Task Detail</span>
+                <span>{{t "literal.ai.task-detail"}}</span>
                 {{#if this.selectedTask}}
                     <small>{{this.selectedTask.uuid}}</small>
                 {{/if}}
@@ -139,30 +139,30 @@
 
             {{#if this.selectedTask}}
                 <div class="fleetbase-ai-admin-detail-grid">
-                    <div><label>Status</label><span>{{or this.selectedTask.status "unknown"}}</span></div>
-                    <div><label>Provider</label><span>{{or this.selectedTask.provider "local"}}</span></div>
-                    <div><label>Model</label><span>{{or this.selectedTask.model "unknown"}}</span></div>
-                    <div><label>Total tokens</label><span>{{this.selectedTask.total_tokens}}</span></div>
-                    <div><label>Created</label><span>{{n-a (format-date-fns this.selectedTask.created_at "dd MMM yyyy HH:mm")}}</span></div>
-                    <div><label>Completed</label><span>{{n-a (format-date-fns this.selectedTask.completed_at "dd MMM yyyy HH:mm")}}</span></div>
+                    <div><label>{{t "literal.ai.status"}}</label><span>{{or this.selectedTask.status "unknown"}}</span></div>
+                    <div><label>{{t "literal.ai.provider"}}</label><span>{{or this.selectedTask.provider "local"}}</span></div>
+                    <div><label>{{t "literal.ai.model"}}</label><span>{{or this.selectedTask.model "unknown"}}</span></div>
+                    <div><label>{{t "literal.ai.total-tokens"}}</label><span>{{this.selectedTask.total_tokens}}</span></div>
+                    <div><label>{{t "literal.ai.created"}}</label><span>{{n-a (format-date-fns this.selectedTask.created_at "dd MMM yyyy HH:mm")}}</span></div>
+                    <div><label>{{t "literal.ai.completed"}}</label><span>{{n-a (format-date-fns this.selectedTask.completed_at "dd MMM yyyy HH:mm")}}</span></div>
                 </div>
 
                 {{#if this.hasSelectedTaskContent}}
                     <div class="fleetbase-ai-admin-content-grid">
                         <div>
-                            <h4>Prompt</h4>
+                            <h4>{{t "literal.ai.prompt"}}</h4>
                             <pre>{{this.selectedTask.prompt}}</pre>
                         </div>
                         <div>
-                            <h4>Response</h4>
+                            <h4>{{t "literal.ai.response"}}</h4>
                             <pre>{{this.selectedTask.response}}</pre>
                         </div>
                     </div>
                 {{else}}
                     <div class="fleetbase-ai-admin-redacted">
-                        <span>Prompt and response content is redacted.</span>
+                        <span>{{t "literal.ai.prompt-and-response-content-is-redacted"}}</span>
                         {{#if this.canRevealContent}}
-                            <Button @icon="eye" @text="Reveal content" @size="sm" @isLoading={{this.revealTaskContent.isRunning}} @onClick={{perform this.revealTaskContent}} />
+                            <Button @icon="eye" @text={{t "literal.ai.reveal-content"}} @size="sm" @isLoading={{this.revealTaskContent.isRunning}} @onClick={{perform this.revealTaskContent}} />
                         {{/if}}
                     </div>
                 {{/if}}
@@ -171,12 +171,12 @@
                     <table class="fleetbase-ai-admin-table">
                         <thead>
                             <tr>
-                                <th>Step</th>
-                                <th>Status</th>
-                                <th>Tool</th>
-                                <th>Provider</th>
-                                <th>Tokens</th>
-                                <th>Created</th>
+                                <th>{{t "literal.ai.step"}}</th>
+                                <th>{{t "literal.ai.status"}}</th>
+                                <th>{{t "literal.ai.tool"}}</th>
+                                <th>{{t "literal.ai.provider"}}</th>
+                                <th>{{t "literal.ai.tokens"}}</th>
+                                <th>{{t "literal.ai.created"}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -191,14 +191,14 @@
                                 </tr>
                             {{else}}
                                 <tr>
-                                    <td colspan="6" class="fleetbase-ai-admin-empty">No task steps recorded.</td>
+                                    <td colspan="6" class="fleetbase-ai-admin-empty">{{t "literal.ai.no-task-steps-recorded"}}</td>
                                 </tr>
                             {{/each}}
                         </tbody>
                     </table>
                 </div>
             {{else}}
-                <div class="fleetbase-ai-admin-empty">Select a task to view its details.</div>
+                <div class="fleetbase-ai-admin-empty">{{t "literal.ai.select-a-task-to-view-its-details"}}</div>
             {{/if}}
         </div>
     </div>

@@ -1,21 +1,21 @@
-<ContentPanel @title="AI Usage Analytics" @open={{true}} @wrapperClass="bordered-classic">
+<ContentPanel @title={{t "literal.ai.ai-usage-analytics"}} @open={{true}} @wrapperClass="bordered-classic">
     <div class="fleetbase-ai-admin-panel">
         <div class="fleetbase-ai-admin-filters">
-            <InputGroup @name="Status">
+            <InputGroup @name={{t "literal.ai.status"}}>
                 <Select class="w-full" @value={{this.filters.status}} @options={{this.statusOptions}} @optionLabel="label" @optionValue="value" @onSelect={{fn this.setFilter "status"}} />
             </InputGroup>
-            <InputGroup @name="Provider">
-                <Select class="w-full" @value={{this.filters.provider}} @options={{this.providerOptions}} @optionLabel="label" @optionValue="value" @placeholder="Any provider" @onSelect={{this.setProvider}} />
+            <InputGroup @name={{t "literal.ai.provider"}}>
+                <Select class="w-full" @value={{this.filters.provider}} @options={{this.providerOptions}} @optionLabel="label" @optionValue="value" @placeholder={{t "literal.ai.any-provider"}} @onSelect={{this.setProvider}} />
             </InputGroup>
-            <InputGroup @name="Model">
-                <Select class="w-full" @value={{this.filters.model}} @options={{this.modelOptions}} @optionLabel="label" @optionValue="value" @placeholder="Any model" @onSelect={{fn this.setFilter "model"}} />
+            <InputGroup @name={{t "literal.ai.model"}}>
+                <Select class="w-full" @value={{this.filters.model}} @options={{this.modelOptions}} @optionLabel="label" @optionValue="value" @placeholder={{t "literal.ai.any-model"}} @onSelect={{fn this.setFilter "model"}} />
             </InputGroup>
-            <InputGroup @name="Organization">
+            <InputGroup @name={{t "literal.ai.organization"}}>
                 <ModelSelect
                     @modelName="company"
                     @source={{this.companySource}}
                     @selectedModel={{this.selectedCompany}}
-                    @placeholder="Select organization"
+                    @placeholder={{t "literal.ai.select-organization"}}
                     @triggerClass="form-select form-input"
                     @allowClear={{true}}
                     @renderInPlace={{true}}
@@ -25,13 +25,13 @@
                     {{or company.name company.public_id company.uuid}}
                 </ModelSelect>
             </InputGroup>
-            <InputGroup @name="User">
+            <InputGroup @name={{t "literal.ai.user"}}>
                 <ModelSelect
                     @modelName="user"
                     @source={{this.userSource}}
                     @query={{this.userQuery}}
                     @selectedModel={{this.selectedUser}}
-                    @placeholder="Select user"
+                    @placeholder={{t "literal.ai.select-user"}}
                     @triggerClass="form-select form-input"
                     @allowClear={{true}}
                     @renderInPlace={{true}}
@@ -41,14 +41,14 @@
                     {{or user.name user.email user.public_id user.uuid}}
                 </ModelSelect>
             </InputGroup>
-            <InputGroup @name="Date">
-                <DatePicker @value={{this.dateRange}} @range={{true}} @onSelect={{this.setDateRange}} @autoClose={{true}} @buttons={{array "clear"}} @placeholder="Exact date or range" class="w-full form-input-sm" />
+            <InputGroup @name={{t "literal.ai.date"}}>
+                <DatePicker @value={{this.dateRange}} @range={{true}} @onSelect={{this.setDateRange}} @autoClose={{true}} @buttons={{array "clear"}} @placeholder={{t "literal.ai.exact-date-or-range"}} class="w-full form-input-sm" />
             </InputGroup>
         </div>
 
         <div class="fleetbase-ai-admin-actions">
-            <Button @type="primary" @icon="chart-column" @text="Update analytics" @isLoading={{this.loadUsage.isRunning}} @onClick={{perform this.loadUsage}} />
-            <Button @icon="xmark" @text="Clear" @onClick={{this.clearFilters}} />
+            <Button @type="primary" @icon="chart-column" @text={{t "literal.ai.update-analytics"}} @isLoading={{this.loadUsage.isRunning}} @onClick={{perform this.loadUsage}} />
+            <Button @icon="xmark" @text={{t "literal.ai.clear"}} @onClick={{this.clearFilters}} />
         </div>
 
         <div class="fleetbase-ai-usage-cards">
@@ -64,56 +64,56 @@
         <div class="fleetbase-ai-admin-stack">
             <div class="fleetbase-ai-admin-card">
                 <div class="fleetbase-ai-admin-card-header">
-                    <span>By Organization</span>
-                    <small>Top 50</small>
+                    <span>{{t "literal.ai.by-organization"}}</span>
+                    <small>{{t "literal.ai.top-50"}}</small>
                 </div>
-                <AiUsageGroupTable @rows={{this.usage.by_company}} @label="Organization" />
+                <AiUsageGroupTable @rows={{this.usage.by_company}} @label={{t "literal.ai.organization"}} />
             </div>
 
             <div class="fleetbase-ai-admin-card">
                 <div class="fleetbase-ai-admin-card-header">
-                    <span>By User</span>
-                    <small>Top 50</small>
+                    <span>{{t "literal.ai.by-user"}}</span>
+                    <small>{{t "literal.ai.top-50"}}</small>
                 </div>
-                <AiUsageGroupTable @rows={{this.usage.by_user}} @label="User" />
+                <AiUsageGroupTable @rows={{this.usage.by_user}} @label={{t "literal.ai.user"}} />
             </div>
 
             <div class="fleetbase-ai-admin-card">
                 <div class="fleetbase-ai-admin-card-header">
-                    <span>By Provider</span>
-                    <small>Top 50</small>
+                    <span>{{t "literal.ai.by-provider"}}</span>
+                    <small>{{t "literal.ai.top-50"}}</small>
                 </div>
-                <AiUsageGroupTable @rows={{this.usage.by_provider}} @label="Provider" />
+                <AiUsageGroupTable @rows={{this.usage.by_provider}} @label={{t "literal.ai.provider"}} />
             </div>
 
             <div class="fleetbase-ai-admin-card">
                 <div class="fleetbase-ai-admin-card-header">
-                    <span>By Model</span>
-                    <small>Top 50</small>
+                    <span>{{t "literal.ai.by-model"}}</span>
+                    <small>{{t "literal.ai.top-50"}}</small>
                 </div>
-                <AiUsageGroupTable @rows={{this.usage.by_model}} @label="Model" />
+                <AiUsageGroupTable @rows={{this.usage.by_model}} @label={{t "literal.ai.model"}} />
             </div>
         </div>
 
         <div class="fleetbase-ai-admin-stack">
             <div class="fleetbase-ai-admin-card">
                 <div class="fleetbase-ai-admin-card-header">
-                    <span>By Status</span>
+                    <span>{{t "literal.ai.by-status"}}</span>
                 </div>
-                <AiUsageGroupTable @rows={{this.usage.by_status}} @label="Status" />
+                <AiUsageGroupTable @rows={{this.usage.by_status}} @label={{t "literal.ai.status"}} />
             </div>
 
             <div class="fleetbase-ai-admin-card">
                 <div class="fleetbase-ai-admin-card-header">
-                    <span>By Day</span>
+                    <span>{{t "literal.ai.by-day"}}</span>
                 </div>
                 <div class="fleetbase-ai-admin-table-wrap">
                     <table class="fleetbase-ai-admin-table">
                         <thead>
                             <tr>
-                                <th>Day</th>
-                                <th>Tasks</th>
-                                <th>Total Tokens</th>
+                                <th>{{t "literal.ai.day"}}</th>
+                                <th>{{t "literal.ai.tasks"}}</th>
+                                <th>{{t "literal.ai.total-tokens-7e34e"}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,7 +125,7 @@
                                 </tr>
                             {{else}}
                                 <tr>
-                                    <td colspan="3" class="fleetbase-ai-admin-empty">No usage found.</td>
+                                    <td colspan="3" class="fleetbase-ai-admin-empty">{{t "literal.ai.no-usage-found"}}</td>
                                 </tr>
                             {{/each}}
                         </tbody>

@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 
 export default class AdminAiSettingsComponent extends Component {
+    @service intl;
     @service fetch;
     @service ai;
     @service notifications;
@@ -71,7 +72,7 @@ export default class AdminAiSettingsComponent extends Component {
             this.metadata = response.metadata ?? this.metadata;
             this.config = this.mergeConfig(response.config ?? {});
             this.ai.applyConfig(this.config, this.metadata);
-            this.notifications.success('AI settings saved.');
+            this.notifications.success(this.intl.t('literal.ai.ai-settings-saved'));
         } catch (error) {
             this.notifications.serverError(error);
         }
@@ -83,7 +84,7 @@ export default class AdminAiSettingsComponent extends Component {
             if (this.testResponse.status === 'error') {
                 return this.notifications.error(this.testResponse.message);
             }
-            this.notifications.success('AI provider test completed.');
+            this.notifications.success(this.intl.t('literal.ai.ai-provider-test-completed'));
         } catch (error) {
             this.notifications.serverError(error);
         }

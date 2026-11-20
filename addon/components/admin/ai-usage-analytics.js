@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 
 export default class AdminAiUsageAnalyticsComponent extends Component {
+    @service intl;
     @service fetch;
     @service notifications;
 
@@ -31,13 +32,15 @@ export default class AdminAiUsageAnalyticsComponent extends Component {
     @tracked selectedUser = null;
     @tracked dateRange = null;
 
-    statusOptions = [
-        { label: 'Any status', value: '' },
-        { label: 'Completed', value: 'completed' },
-        { label: 'Failed', value: 'failed' },
-        { label: 'Cancelled', value: 'cancelled' },
-        { label: 'Running', value: 'running' },
+    get statusOptions() {
+        return [
+        { label: this.intl.t('literal.ai.any-status'), value: '' },
+        { label: this.intl.t('literal.ai.completed'), value: 'completed' },
+        { label: this.intl.t('literal.ai.failed'), value: 'failed' },
+        { label: this.intl.t('literal.ai.cancelled'), value: 'cancelled' },
+        { label: this.intl.t('literal.ai.running'), value: 'running' },
     ];
+    }
 
     constructor() {
         super(...arguments);
@@ -51,17 +54,17 @@ export default class AdminAiUsageAnalyticsComponent extends Component {
 
     get usageCards() {
         return [
-            { label: 'Tasks', value: this.summary.task_count ?? 0, icon: 'list-check' },
-            { label: 'Total tokens', value: this.summary.total_tokens ?? 0, icon: 'coins' },
-            { label: 'Input tokens', value: this.summary.input_tokens ?? 0, icon: 'arrow-right-to-bracket' },
-            { label: 'Output tokens', value: this.summary.output_tokens ?? 0, icon: 'arrow-right-from-bracket' },
-            { label: 'Completed', value: this.summary.completed_count ?? 0, icon: 'circle-check' },
-            { label: 'Failed', value: this.summary.failed_count ?? 0, icon: 'triangle-exclamation' },
+            { label: this.intl.t('literal.ai.tasks'), value: this.summary.task_count ?? 0, icon: 'list-check' },
+            { label: this.intl.t('literal.ai.total-tokens'), value: this.summary.total_tokens ?? 0, icon: 'coins' },
+            { label: this.intl.t('literal.ai.input-tokens'), value: this.summary.input_tokens ?? 0, icon: 'arrow-right-to-bracket' },
+            { label: this.intl.t('literal.ai.output-tokens'), value: this.summary.output_tokens ?? 0, icon: 'arrow-right-from-bracket' },
+            { label: this.intl.t('literal.ai.completed'), value: this.summary.completed_count ?? 0, icon: 'circle-check' },
+            { label: this.intl.t('literal.ai.failed'), value: this.summary.failed_count ?? 0, icon: 'triangle-exclamation' },
         ];
     }
 
     get providerOptions() {
-        return [{ label: 'Any provider', value: '' }, ...(this.metadata.providers ?? [])];
+        return [{ label: this.intl.t('literal.ai.any-provider'), value: '' }, ...(this.metadata.providers ?? [])];
     }
 
     get selectedProviderMetadata() {
@@ -69,7 +72,7 @@ export default class AdminAiUsageAnalyticsComponent extends Component {
     }
 
     get modelOptions() {
-        return [{ label: 'Any model', value: '' }, ...(this.selectedProviderMetadata?.models ?? [])];
+        return [{ label: this.intl.t('literal.ai.any-model'), value: '' }, ...(this.selectedProviderMetadata?.models ?? [])];
     }
 
     get userQuery() {

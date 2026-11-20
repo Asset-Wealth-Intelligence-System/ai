@@ -6,6 +6,7 @@ import { task } from 'ember-concurrency';
 import formatAiResponse from '../utils/format-ai-response';
 
 export default class AiPromptComponent extends Component {
+    @service intl;
     @service ai;
     @service aiEvents;
     @service fetch;
@@ -339,7 +340,7 @@ export default class AiPromptComponent extends Component {
             id: file.id,
             uuid: file.uuid,
             public_id: file.public_id,
-            name: file.original_filename ?? file.name ?? 'Attachment',
+            name: file.original_filename ?? file.name ?? this.intl.t('literal.ai.attachment'),
             content_type: file.content_type,
             file_size: file.file_size,
             displaySize: this.formatFileSize(file.file_size),

@@ -1,18 +1,18 @@
 {{#if this.ai.isOpen}}
-    <div class="fleetbase-ai-backdrop" role="button" aria-label="Close Fleetbase AI" {{on "click" this.close}}></div>
-    <div class="fleetbase-ai-overlay" role="dialog" aria-label="Fleetbase AI" {{on "click" this.close}}>
+    <div class="fleetbase-ai-backdrop" role="button" aria-label={{t "literal.ai.close-fleetbase-ai"}} {{on "click" this.close}}></div>
+    <div class="fleetbase-ai-overlay" role="dialog" aria-label={{t "literal.ai.fleetbase-ai"}} {{on "click" this.close}}>
         <div class="fleetbase-ai-shell">
             {{#if this.showHistory}}
                 <div class="fleetbase-ai-history-overlay" {{on "click" this.stopPropagation}}>
                     <div class="fleetbase-ai-response-region fleetbase-ai-history fleetbase-ai-history-card">
-                        <div class="fleetbase-ai-panel-title">AI Chats</div>
+                        <div class="fleetbase-ai-panel-title">{{t "literal.ai.ai-chats-7759a"}}</div>
                         {{#if this.ai.loadSessions.isRunning}}
-                            <div class="fleetbase-ai-muted">Loading chats...</div>
+                            <div class="fleetbase-ai-muted">{{t "literal.ai.loading-chats"}}</div>
                         {{else}}
                             {{#each this.ai.sessions as |session|}}
                                 <div class="fleetbase-ai-history-item" role="button" tabindex="0" {{on "click" (fn this.selectSession session)}} {{on "keydown" (fn this.handleHistoryItemKeydown session)}}>
                                     <span class="fleetbase-ai-history-copy">
-                                        <span class="fleetbase-ai-history-prompt">{{or session.title "New AI chat"}}</span>
+                                        <span class="fleetbase-ai-history-prompt">{{or session.title (t "literal.ai.new-ai-chat")}}</span>
                                         <span class="fleetbase-ai-history-meta">
                                             {{session.status}}
                                             {{#if session.tasks_count}}
@@ -22,7 +22,7 @@
                                     </span>
                                     <Button
                                         @icon="trash"
-                                        @helpText="Delete chat"
+                                        @helpText={{t "literal.ai.delete-chat"}}
                                         @wrapperClass="fleetbase-ai-history-delete-wrapper"
                                         class="fleetbase-ai-history-delete"
                                         @disabled={{this.ai.deleteSession.isRunning}}
@@ -30,7 +30,7 @@
                                     />
                                 </div>
                             {{else}}
-                                <div class="fleetbase-ai-muted">No AI chats yet.</div>
+                                <div class="fleetbase-ai-muted">{{t "literal.ai.no-ai-chats-yet"}}</div>
                             {{/each}}
                         {{/if}}
                     </div>
@@ -56,7 +56,7 @@
                                         {{#each task.metadata.attachments as |attachment|}}
                                             <span class="fleetbase-ai-attachment-chip">
                                                 <FaIcon @icon="paperclip" />
-                                                <span class="fleetbase-ai-attachment-name">{{or attachment.original_filename attachment.name "Attachment"}}</span>
+                                                <span class="fleetbase-ai-attachment-name">{{or attachment.original_filename attachment.name (t "literal.ai.attachment")}}</span>
                                             </span>
                                         {{/each}}
                                     </div>
@@ -73,7 +73,7 @@
                                     <span></span>
                                     <span></span>
                                 </span>
-                                <span>Thinking...</span>
+                                <span>{{t "literal.ai.thinking"}}</span>
                             </div>
                         </div>
                     {{else}}
@@ -104,7 +104,7 @@
             {{#if this.showScrollToLatest}}
                 <Button
                     @icon="arrow-down"
-                    @helpText="Scroll to latest"
+                    @helpText={{t "literal.ai.scroll-to-latest"}}
                     @wrapperClass="fleetbase-ai-scroll-latest-wrapper"
                     class="fleetbase-ai-scroll-latest"
                     @onClick={{this.scrollToLatest}}
@@ -117,7 +117,7 @@
                     {{#if dropzone.active}}
                         <div class="fleetbase-ai-drop-indicator">
                             <FaIcon @icon="paperclip" />
-                            <span>Drop files to attach</span>
+                            <span>{{t "literal.ai.drop-files-to-attach"}}</span>
                         </div>
                     {{/if}}
 
@@ -130,7 +130,7 @@
                                     {{#if attachment.displaySize}}
                                         <small>{{attachment.displaySize}}</small>
                                     {{/if}}
-                                    <button type="button" aria-label="Remove attachment" {{on "click" (fn this.removeAttachment attachment)}}>
+                                    <button type="button" aria-label={{t "literal.ai.remove-attachment"}} {{on "click" (fn this.removeAttachment attachment)}}>
                                         <FaIcon @icon="xmark" />
                                     </button>
                                 </span>
@@ -150,10 +150,10 @@
                     {{/if}}
 
                     <div class="fleetbase-ai-prompt-row">
-                        <Button @icon="clock-rotate-left" @helpText="AI chats" @wrapperClass="fleetbase-ai-button-wrapper" class="fleetbase-ai-icon-button" @onClick={{this.toggleHistory}} />
+                        <Button @icon="clock-rotate-left" @helpText={{t "literal.ai.ai-chats"}} @wrapperClass="fleetbase-ai-button-wrapper" class="fleetbase-ai-icon-button" @onClick={{this.toggleHistory}} />
                         <Button
                             @icon="plus"
-                            @helpText="New chat"
+                            @helpText={{t "literal.ai.new-chat"}}
                             @wrapperClass="fleetbase-ai-button-wrapper"
                             class="fleetbase-ai-icon-button"
                             @disabled={{this.ai.startSession.isRunning}}
@@ -168,17 +168,17 @@
                             @labelClass="fleetbase-ai-attachment-upload-label"
                             @disabled={{this.isUploadingAttachments}}
                         >
-                            <span class="fleetbase-ai-icon-button fleetbase-ai-attachment-button" role="button" aria-label="Attach files">
+                            <span class="fleetbase-ai-icon-button fleetbase-ai-attachment-button" role="button" aria-label={{t "literal.ai.attach-files"}}>
                                 <FaIcon @icon="paperclip" />
                             </span>
                             <Attach::Tooltip @class="clean" @animation="scale" @placement="top">
-                                <InputInfo @text="Attach files" />
+                                <InputInfo @text={{t "literal.ai.attach-files"}} />
                             </Attach::Tooltip>
                         </FileUpload>
                         <Textarea
                             @value={{this.prompt}}
                             rows="1"
-                            placeholder="Ask Fleetbase AI..."
+                            placeholder={{t "literal.ai.ask-fleetbase-ai"}}
                             class="fleetbase-ai-input"
                             {{on "keydown" this.handlePromptKeydown}}
                             {{on "input" this.resizePromptTextarea}}
@@ -187,14 +187,14 @@
                         <Button
                             @icon="paper-plane"
                             @type="primary"
-                            @helpText="Send"
+                            @helpText={{t "literal.ai.send"}}
                             @wrapperClass="fleetbase-ai-button-wrapper"
                             class="fleetbase-ai-icon-button fleetbase-ai-submit"
                             @disabled={{this.isSubmitDisabled}}
                             @isLoading={{this.ai.submit.isRunning}}
                             @onClick={{this.submit}}
                         />
-                        <Button @icon="xmark" @helpText="Close" @wrapperClass="fleetbase-ai-button-wrapper" class="fleetbase-ai-icon-button" @onClick={{this.close}} />
+                        <Button @icon="xmark" @helpText={{t "literal.ai.close"}} @wrapperClass="fleetbase-ai-button-wrapper" class="fleetbase-ai-icon-button" @onClick={{this.close}} />
                     </div>
                     </div>
                 </FileDropzone>

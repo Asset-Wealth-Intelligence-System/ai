@@ -3,7 +3,7 @@
         <button
             type="button"
             class="fleetbase-ai-header-tray-button-trigger {{if (media 'isMobile') 'is-mobile'}}"
-            aria-label="Open Fleetbase AI"
+            aria-label={{t "literal.ai.open-fleetbase-ai"}}
             {{on "click" this.togglePrompt}}
         >
             <span class="next-org-button-trigger fleetbase-ai-header-tray-button-icon flex-shrink-0">
@@ -11,7 +11,7 @@
             </span>
         </button>
         <Attach::Tooltip @class="clean" @animation="scale" @placement="bottom">
-            <InputInfo @text="Open Fleetbase AI" />
+            <InputInfo @text={{t "literal.ai.open-fleetbase-ai"}} />
         </Attach::Tooltip>
     </div>
 {{/if}}
